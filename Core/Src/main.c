@@ -342,7 +342,7 @@ int main(void)
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
   HAL_ADC_Start_IT(&hadc1);
 
-  int qty = 2;
+  int qty = 1;
   int wireLength1 = 10;
   int wireLength2 = 25;
   int wireLength3 = 10;
@@ -459,7 +459,7 @@ int main(void)
 					  // Stepper1 <
 					  while(TP_Touchpad_Pressed())
 					  {
-						  HAL_GPIO_WritePin(DIR1_PORT, DIR1_PIN, GPIO_PIN_SET);
+						  HAL_GPIO_WritePin(DIR1_PORT, DIR1_PIN, GPIO_PIN_RESET);
 						  HAL_GPIO_WritePin(STEP1_PORT, STEP1_PIN, GPIO_PIN_SET);
 						  delayMicro(adc_val);
 						  HAL_GPIO_WritePin(STEP1_PORT, STEP1_PIN, GPIO_PIN_RESET);
@@ -471,7 +471,7 @@ int main(void)
 					  // Stepper1 >
 					  while(TP_Touchpad_Pressed())
 					  {
-						  HAL_GPIO_WritePin(DIR1_PORT, DIR1_PIN, GPIO_PIN_RESET);
+						  HAL_GPIO_WritePin(DIR1_PORT, DIR1_PIN, GPIO_PIN_SET);
 						  HAL_GPIO_WritePin(STEP1_PORT, STEP1_PIN, GPIO_PIN_SET);
 						  delayMicro(adc_val);
 						  HAL_GPIO_WritePin(STEP1_PORT, STEP1_PIN, GPIO_PIN_RESET);
@@ -511,6 +511,8 @@ int main(void)
 				  }
 			  }
 		  } else touch = 0;
+		  pause = 0;
+		  cancel = 0;
 	  }
 
 	  if(start == 1)

@@ -215,19 +215,23 @@ void EXTI2_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI2_IRQn 0 */
 	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_7);
-	currentMillis = HAL_GetTick();
-	if(currentMillis - previousMillis > 10)
+	if(currentMillis - previousMillis > 200)
 	{
-		if(pause == 0) {
+		if(pause == 0 && HAL_GetTick() >= currentMillis+200) {
 			pause = 1;
 			textStatus("PAUSE");
+			currentMillis = HAL_GetTick();
 		}
 		else
 		{
 			pause = 0;
 			textStatus("RUNNING");
+			currentMillis = HAL_GetTick();
 		}
 		previousMillis = currentMillis;
+	}
+	else{
+		currentMillis = HAL_GetTick();
 	}
   /* USER CODE END EXTI2_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(BTN_PAUSE_Pin);
@@ -243,15 +247,18 @@ void EXTI3_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI3_IRQn 0 */
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);
-	currentMillis = HAL_GetTick();
-	if(currentMillis - previousMillis > 10)
+	if(currentMillis - previousMillis > 200)
 	{
-		if(cancel == 0) {
+		if(cancel == 0 && HAL_GetTick() >= currentMillis+200) {
 			cancel = 1;
 			pause = 0;
 			textStatus("CANCEL");
+			currentMillis = HAL_GetTick();
 		}
 		previousMillis = currentMillis;
+	}
+	else{
+		currentMillis = HAL_GetTick();
 	}
   /* USER CODE END EXTI3_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(BTN_CANCEL_Pin);
